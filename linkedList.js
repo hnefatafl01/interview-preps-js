@@ -1,46 +1,59 @@
-// Singly Linked List
 function Node(data) {
   this.data = data;
-  this.next = null;
+  this.next = undefined;
+  this.prev = undefined;
 }
 
 function LinkedList() {
-  this.head = null;
-  this.tail = null;
-  this.currentNode = null;
+  this.head = undefined;
+  this.tail = undefined;
+  this.count = 0;
+}
 
-  this.add = function (data){
-    if (head == undefined) {
-      var head = new Node(data);
-      var tail = head;
-      var currentNode = head;
-      head.next = null;
-      return head;
-    } else {
-      var newNode = new Node(data);
-      var tail = newNode;
-      var currentNode = newNode;
-      head.next = newNode;
-      newNode.next = null;
-      return newNode.data;
-    }
+LinkedList.prototype.add = function(data){
+  var temp = new Node(data);
+  if (this.head === undefined){
+    this.head = this.tail = temp;
+    this.head.next = undefined;
+  } else {
+    this.tail.next = temp;
+    temp.prev = this.tail;
+    this.tail = temp;
+    temp.next = undefined;
   }
+  this.count++;
+  return this.count;
+}
 
-  this.printNodes = function(){
-    if (head == undefined) {
-      return -1;
-    }
-    while(currentNode.next !== null) {
-      currentNode = currentNode.next;
-      console.log(currentNode);
-    }
+LinkedList.prototype.remove = function() {
+  if (this.tail === undefined) {
+    return "empty";
+  } else if (this.tail === this.head) {
+    this.tail = this.head = null;
+  } else {
+    var temp = this.tail.prev;
+    temp.next = undefined;
+    this.tail.prev = undefined;
+    this.tail = temp;
+  }
+  this.count--;
+  return this.count;
+}
+
+LinkedList.prototype.printNodes = function(){
+  var current = this.head;
+  while(current !== undefined) {
+    console.log(current.data);
+    current = current.next;
   }
 }
 
 var list = new LinkedList();
-// console.log(list)
-// console.log(list.add(10));
-list.add(10);
-console.log(list);
-// console.log(list.add(133));
-console.log(list.printNodes());
+list.add(1);
+list.add(2);
+list.add(3);
+list.remove();
+list.add(4);
+// console.log(list.add(5));
+
+list.printNodes();
