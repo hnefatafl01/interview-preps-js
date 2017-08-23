@@ -1,5 +1,5 @@
-function BinarySearchTree(root) {
-    this.root = root;   
+function BinaryTree(root) {
+    this.root = root;
 }
 
 function TreeNode(data) {
@@ -8,12 +8,13 @@ function TreeNode(data) {
     this.right = undefined;
 }
 
-BinarySearchTree.prototype.InsertNode = function(data) {
+BinaryTree.prototype.InsertNode = function(data) {
     const tmp = new TreeNode(data);
     if (!this.root) {
         this.root = tmp;
+        return this.root.data;
     }
-    let current = this.root;
+    var current = this.root;
     while (current) {
         if (data < current.data) {
             if (!current.left) {
@@ -29,14 +30,14 @@ BinarySearchTree.prototype.InsertNode = function(data) {
             } else {
                 current = current.right;
             }
-        }
+        } 
     }
 }
 
-BinarySearchTree.prototype.breadthFirst = function(root) {
+BinaryTree.prototype.breadthFirst = function(root) {
     const queue = [root];
-    let current = queue.shift();
     while (queue.length > 0) {
+        var current = queue.shift();
         console.log(current.data);
         if (current.left) {
             queue.push(current.left);
@@ -47,7 +48,24 @@ BinarySearchTree.prototype.breadthFirst = function(root) {
     }
 }
 
-const tree = new BinarySearchTree();
+BinaryTree.prototype.PreOrder = function(root, search) {
+    const findVal = search;
+    const current = root;
+    if (findVal === current.data) {
+        console.log(`success ${current.data} found!`);
+        return `success ${current.data} found!`;
+    } else {
+        if (current.left) {
+            this.PreOrder(current.left, findVal);
+        }
+        if (current.right) {
+            this.PreOrder(current.right, findVal);
+        }
+    }
+    return `${findVal} not found`;
+}
+
+const tree = new BinaryTree();
 tree.InsertNode(10);
 tree.InsertNode(8);
 tree.InsertNode(11);
@@ -55,5 +73,6 @@ tree.InsertNode(7);
 tree.InsertNode(12);
 tree.InsertNode(6);
 tree.InsertNode(13);
-console.log(tree);
-tree.breadthFirst(tree.root);
+tree.PreOrder(tree.root, 20);
+tree.PreOrder(tree.root, 13);
+// tree.breadthFirst(tree.root);
