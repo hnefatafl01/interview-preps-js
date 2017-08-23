@@ -18,16 +18,16 @@ BinarySearchTree.prototype.InsertNode = function(data) {
         if (data < current.data) {
             if (!current.left) {
                 current.left = tmp;
+                break;
             } else {
                 current = current.left;
-                break;
             }
         } else {
             if (!current.right) {
                 current.right = tmp;
+                break;
             } else {
                 current = current.right;
-                break;
             }
         }
     }
@@ -36,13 +36,15 @@ BinarySearchTree.prototype.InsertNode = function(data) {
 BinarySearchTree.prototype.breadthFirst = function(root) {
     const queue = [root];
     let current = queue.shift();
-    console.log(current.data);
+    while (queue.length > 0) {
+        console.log(current.data);
         if (current.left) {
             queue.push(current.left);
         }
         if (current.right) {
             queue.push(current.right);
         }
+    }
 }
 
 const tree = new BinarySearchTree();
