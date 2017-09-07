@@ -29,6 +29,7 @@ function mode(array) {
             mode = num;
         }
     });
+    console.log(numMap);
     return +mode;
 }
 

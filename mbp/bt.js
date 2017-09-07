@@ -62,7 +62,7 @@ BinaryTree.prototype.PreOrder = function(root, search) {
             this.PreOrder(current.right, findVal);
         }
     }
-    return `${findVal} not found`;
+    return `exit ${findVal} not found`;
 }
 
 const tree = new BinaryTree();
